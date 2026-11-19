@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+/*
+ * Light, warm glassmorphism theme.
+ *   canvas  page background          ink     primary text
+ *   panel   translucent surface      glass   frosted panel utility (below)
+ *   gold    brand fill (#c9a35c)     gold-ink  gold for text — darker for contrast on light
+ */
+@theme inline {
+  --color-canvas: #f4eee5;
+  --color-panel: rgb(255 255 255 / 0.55);
+  --color-panel-2: rgb(120 92 52 / 0.07);
+  --color-line: rgb(120 92 52 / 0.15);
+  --color-gold: #c9a35c;
+  --color-gold-soft: #dbb876;
+  --color-gold-ink: #8f6526;
+  --color-ink: #2a2119;
+  --color-muted: #75685a;
+  --color-good: #2c8352;
+  --color-warn: #bf4f2e;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-ken-burns: ken-burns 28s ease-in-out infinite alternate;
+  --animate-ticker: ticker 60s linear infinite;
+  --animate-fade-in: fade-in 0.2s ease-out both;
+  --animate-pop-in: pop-in 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+  --animate-caret: caret 1s step-end infinite;
+  --animate-badge-flip: badge-flip 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+}
+
+@keyframes ken-burns {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to { transform: scale(1.12) translate3d(-1.5%, -1%, 0); }
+}
+@keyframes ticker {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes caret {
+  50% { opacity: 0; }
+}
+@keyframes badge-flip {
+  from { opacity: 0; transform: rotateX(90deg) scale(0.9); }
+  to { opacity: 1; transform: none; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html {
+  color-scheme: light;
+  background: var(--color-canvas);
+}
+
+body {
+  /* Soft warm light behind everything so the frosted panels have something to blur. */
+  background:
+    radial-gradient(55rem 38rem at 8% -6%, rgb(246 205 150 / 0.55), transparent 62%),
+    radial-gradient(48rem 36rem at 102% 12%, rgb(240 176 120 / 0.38), transparent 60%),
+    radial-gradient(60rem 44rem at 40% 105%, rgb(230 205 170 / 0.6), transparent 65%),
+    var(--color-canvas);
+  background-attachment: fixed;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+h1,
+h2 {
+  font-weight: 650;
+}
+h3 {
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-gold-ink);
+  font-weight: 600;
+}
+
+.img-fallback {
+  background: linear-gradient(135deg, #efe3d1 0%, #e2cfb3 45%, #f3ece2 100%);
+}
+
+/* Frosted glass surface. Pair with a border (border-line or border-white/70) and a radius. */
+@utility glass {
+  background-color: rgb(255 255 255 / 0.52);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  backdrop-filter: blur(22px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 12px 32px -16px rgb(96 64 24 / 0.22);
+}
+
+.gold-rule {
+  height: 2px;
+  width: 2.5rem;
+  border-radius: 2px;
+  background: var(--color-gold);
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .motion-safe-only,
+  .animate-ken-burns,
+  .animate-ticker {
+    animation: none !important;
+  }
+}
